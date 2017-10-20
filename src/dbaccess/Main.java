@@ -8,7 +8,7 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
         try {
-            Connection c = null;
+            Connection c = ConnectionBuilder.getConnection();
             //
 
             CustomerDataLoader customerDataLoader = new CustomerDataLoader(c);

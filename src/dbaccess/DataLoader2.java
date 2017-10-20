@@ -48,3 +48,18 @@ abstract class AbstractDataLoader2 implements DataLoader2 {
     }
 
 }
+
+class CustomerDataLoader2 extends AbstractDataLoader2 {
+
+    public CustomerDataLoader2(Connection c) {
+        super(c);
+    }
+
+    public void mapParameters(List parameterValues) {
+
+    }
+
+    public List processResult() throws SQLException {
+        return null;
+    }
+}
