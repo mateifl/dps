@@ -20,6 +20,10 @@ public class DatabaseBuilder {
             statement.execute("insert into customers values(5, 'Dave P', 'UK', 'London')");
             statement.execute("insert into customers values(6, 'Jean M', 'France', 'Paris')");
             statement.execute("insert into customers values(7, 'Monique N', 'France', 'Lyon')");
+            statement.execute("create table categories(id int primary key, name varchar(255), description varchar(255)) ");
+            statement.execute("insert into categories values(1, 'Paper', 'All kinds of paper')");
+            statement.execute("insert into categories values(2, 'Pen', 'All kinds of pens')");
+            statement.execute("insert into categories values(3, 'File', 'All kinds of files')");
 
         }
         catch (SQLException e)

@@ -1,10 +1,14 @@
 package dbaccess;
 
-import dbaccess.beans.Customer;
-
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import dbaccess.beans.Category;
+import dbaccess.beans.Customer;
 
 /**
  * Data loader - loads data from the database into the application, using prepared statements.
@@ -112,14 +116,35 @@ class CustomersLoader //extends AbstractDataLoader
 //}
 
 
-//class EmployeeDataLoader extends AbstractDataLoader {
-//
-//    public EmployeeDataLoader(Connection c) {
-//        super(c);
-//    }
-//
-//    public List execute(String sql, List parameters) {
-//        return null;
-//    }
-//
-//}
+class CategoriesLoader {
+
+    public List<Category> execute(String sql, String filterValue) throws SQLException {
+        // COMMON - create connection and prepared statement
+        Connection connection = ConnectionBuilder.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        // -------------------------------------------------
+        // map parameters
+        preparedStatement.setString(1, filterValue);
+        // -------------------------------------------------
+        // COMMON execute statement
+        ResultSet r = preparedStatement.executeQuery();
+        // -------------------------------------------------
+        // create the list
+        List<Category> l = new ArrayList<Category>();
+        while(r.next()) {
+        	Category c = new Category();
+            c.setId(r.getInt(0));
+            c.setName(r.getString(1));
+            c.setCountry(r.getString(2));
+            l.add(c);
+        }
+        // close the result set
+        // COMMON - clean up
+        r.close();
+        preparedStatement.close();
+        connection.close();
+        // return the list
+        return l;
+    }
+
+}
