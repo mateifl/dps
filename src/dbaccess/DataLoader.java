@@ -67,7 +67,7 @@ class CustomersLoader //extends AbstractDataLoader
             Customer c = new Customer();
             c.setId(r.getInt(0));
             c.setName(r.getString(1));
-            c.setCountry(r.getString(2));
+
             c.setCity(r.getString(3));
             l.add(c);
         }
