@@ -1,4 +1,4 @@
-package transactions.strategy2;
+package transactions.strategy3;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -26,12 +26,15 @@ public interface Transaction {
 }
 
 abstract class AbstractJdbcTransaction<T> implements Transaction {
-
+	
+	private Transaction transaction;
+	
     protected Connection connection;
     protected PreparedStatement preparedStatement;
-    protected abstract ParameterMapper<T> getParameterMapper();
     protected T bean;
     protected abstract String getSQLStatement();
+
+    
     
     @Override
     public void start() throws SQLException {
@@ -42,71 +45,20 @@ abstract class AbstractJdbcTransaction<T> implements Transaction {
     @Override
     /** This method implements the Template design pattern */
     public void execute() throws SQLException {
+    	if(transaction != null)
+    		transaction.execute();
     	preparedStatement = connection.prepareStatement(getSQLStatement());
-    	getParameterMapper().mapParameters(preparedStatement, bean);
     	preparedStatement.execute();
     }
     
     @Override
     public void commit() throws SQLException {
-    	if(preparedStatement != null)
-    		preparedStatement.close();
-        connection.commit();
-        connection.close();
-    }
-
-    @Override
-    public void rollback() throws SQLException {
     	if(preparedStatement != null)
     		preparedStatement.close();
     	if(connection != null) {
-    		connection.rollback();
+    		connection.commit();
     		connection.close();
     	}
-    }
-    
-}
-
-
-/** Strategy implementation */
-class JdbcTransaction<T> implements Transaction {
-
-    private Connection connection;
-    private PreparedStatement preparedStatement;
-    // Command implementation
-    private ParameterMapper<T> parameterMapper;
-    private T bean;
-    private String sqlStatement;
-    
-    public JdbcTransaction(ParameterMapper<T> parameterMapper, String sqlStatement) {
-		this.parameterMapper = parameterMapper;
-		this.sqlStatement = sqlStatement;
-	}
-    
-    public void setBean(T bean) {
-    	this.bean = bean;
-    }
-    
-    @Override
-    public void start() throws SQLException {
-        connection = ConnectionBuilder.getConnection();
-        connection.setAutoCommit(false);
-    }
-
-    @Override
-    /** This method implements the Template design pattern */
-    public void execute() throws SQLException {
-    	preparedStatement = connection.prepareStatement(sqlStatement);
-    	parameterMapper.mapParameters(preparedStatement, bean);
-    	preparedStatement.execute();
-    }
-    
-    @Override
-    public void commit() throws SQLException {
-    	if(preparedStatement != null)
-    		preparedStatement.close();
-        connection.commit();
-        connection.close();
     }
 
     @Override
