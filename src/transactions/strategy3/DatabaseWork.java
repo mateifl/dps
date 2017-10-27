@@ -13,7 +13,6 @@ public interface DatabaseWork<T> {
     void doInTransaction(T object);
 }
 
-
 abstract class AbstractDatabaseWork {
 	
 	protected DatabaseWork<Connection> worker;
@@ -32,9 +31,8 @@ class UpdateCustomer extends AbstractDatabaseWork implements DatabaseWork<Connec
 	private ParameterMapper<Customer> customerMapper;
 	private Customer customer;
 	
-	public UpdateCustomer(ParameterMapper<Customer> customerMapper, Customer customer, 
-						  DatabaseWork<Connection> worker) {
-		this.customerMapper = customerMapper;
+	public UpdateCustomer(Customer customer, DatabaseWork<Connection> worker) {
+		this.customerMapper = new CustomerUpdateParameterMapper();
 		this.customer = customer;
 		this.worker = worker;
 	}
@@ -44,6 +42,7 @@ class UpdateCustomer extends AbstractDatabaseWork implements DatabaseWork<Connec
         try {
         	if(this.worker != null)
         		worker.doInTransaction(connection);
+        	System.out.println("update customer");
         	executePreparedStatement(connection, SQLStatements.CUSTOMER_UPDATE, customerMapper, customer);
         }
         catch(SQLException e) {
@@ -53,13 +52,13 @@ class UpdateCustomer extends AbstractDatabaseWork implements DatabaseWork<Connec
     }
 }
 
-class InsertOrderWithCustomerUpdate extends AbstractDatabaseWork implements DatabaseWork<Connection> {
+class InsertOrder extends AbstractDatabaseWork implements DatabaseWork<Connection> {
 
 	private ParameterMapper<Order> orderMapper;
 	private Order order;
 	
-	public InsertOrderWithCustomerUpdate(ParameterMapper<Order> orderMapper, Order order, DatabaseWork<Connection> worker) {
-		this.orderMapper = orderMapper;
+	public InsertOrder(Order order, DatabaseWork<Connection> worker) {
+		this.orderMapper = new OrderInsertParameterMapper();
 		this.order = order;
 		this.worker = worker;
 	}
@@ -69,6 +68,7 @@ class InsertOrderWithCustomerUpdate extends AbstractDatabaseWork implements Data
         try {
         	if(worker != null)
         		worker.doInTransaction(connection);
+        	System.out.println("inserting order");
         	executePreparedStatement(connection, SQLStatements.INSERT_ORDER, orderMapper, order);
         }
         catch(SQLException e) {
@@ -76,5 +76,31 @@ class InsertOrderWithCustomerUpdate extends AbstractDatabaseWork implements Data
         }
 		
 	} 
+}
+
+class DefaultDatabaseWork<T> implements DatabaseWork<Connection> {
+
+	private DatabaseWork<Connection> worker;
+	private ParameterMapper<T> mapper;
+	private T bean;
+	private String sql;
+	
+	
+	
+	@Override
+	public void doInTransaction(Connection connection) {
+		try {
+			if(worker != null)
+				worker.doInTransaction(connection);
+			PreparedStatement ps = connection.prepareStatement(sql);
+			mapper.mapParameters(ps, bean);
+			ps.execute();
+			ps.close();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
 	
 }

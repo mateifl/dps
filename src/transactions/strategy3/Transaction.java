@@ -14,7 +14,7 @@ public interface Transaction {
     void start() throws SQLException;
     
     /** Executes the statements on the database */
-    void execute() throws SQLException;
+    void  execute(DatabaseWork worker) throws SQLException;
 
     /** Commit the transaction */
     void commit() throws SQLException;
@@ -26,26 +26,10 @@ public interface Transaction {
 
 
 /** Strategy implementation */
-class JdbcTransaction<T> implements Transaction {
+class JdbcTransaction implements Transaction {
 
     private Connection connection;
-    private PreparedStatement preparedStatement;
-    // Command implementation
-    private ParameterMapper parameterMapper;
-    private T bean;
-    private String sqlStatement;
-    private Transaction transaction;
-    
-    public JdbcTransaction(ParameterMapper parameterMapper, String sqlStatement, Transaction transaction) {
-		this.parameterMapper = parameterMapper;
-		this.sqlStatement = sqlStatement;
-		this.transaction = transaction;
-	}
-    
-    public void setBean(T bean) {
-    	this.bean = bean;
-    }
-    
+
     @Override
     public void start() throws SQLException {
     	System.out.println("creating connection");
@@ -56,21 +40,13 @@ class JdbcTransaction<T> implements Transaction {
 
     @Override
     /** This method implements the Template design pattern */
-    public void execute() throws SQLException {
-    	System.out.println("execute database operations");
-    	if(transaction != null)
-    		transaction.execute();
-    	
-    	preparedStatement = connection.prepareStatement(sqlStatement);
-    	parameterMapper.mapParameters(preparedStatement, bean);
-    	preparedStatement.execute();
+    public void execute(DatabaseWork worker) throws SQLException {
+    	worker.doInTransaction(connection);
     }
     
     @Override
     public void commit() throws SQLException {
     	System.out.println("JdbcTransaction.commit()");
-    	if(preparedStatement != null)
-    		preparedStatement.close();
     	if(connection != null) {
     		connection.commit();
     		connection.close();
@@ -80,8 +56,6 @@ class JdbcTransaction<T> implements Transaction {
     @Override
     public void rollback() throws SQLException {
     	System.out.println("JdbcTransaction.rollback()");
-    	if(preparedStatement != null)
-    		preparedStatement.close();
     	if(connection != null) {
     		connection.rollback();
     		connection.close();
@@ -90,68 +64,68 @@ class JdbcTransaction<T> implements Transaction {
     
 }
 
-/** Strategy implementation */
-class JdbcTransaction2<T> implements Transaction {
-
-    private Connection connection;
-    private PreparedStatement preparedStatement;
-    // Command implementation
-    private List<ParameterMapper> parameterMapper;
-    private T bean;
-    private String sqlStatement;
-    private Transaction transaction;
-    
-    public JdbcTransaction2(List<ParameterMapper> parameterMapper, String sqlStatement, Transaction transaction) {
-		this.parameterMapper = parameterMapper;
-		this.sqlStatement = sqlStatement;
-		this.transaction = transaction;
-	}
-    
-    public void setBeans(List beans) {
-    	this.bean = bean;
-    }
-    
-    @Override
-    public void start() throws SQLException {
-    	System.out.println("creating connection");
-        connection = ConnectionBuilder.getConnection();
-        connection.setAutoCommit(false);
-        System.out.println("connection created");
-    }
-
-    @Override
-    /** This method implements the Template design pattern */
-    public void execute() throws SQLException {
-    	System.out.println("execute database operations");
-    	if(transaction != null)
-    		transaction.execute();
-    	
-    	preparedStatement = connection.prepareStatement(sqlStatement);
-//    	parameterMapper.mapParameters(preparedStatement, bean);
-    	preparedStatement.execute();
-    }
-    
-    @Override
-    public void commit() throws SQLException {
-    	System.out.println("JdbcTransaction.commit()");
-    	if(preparedStatement != null)
-    		preparedStatement.close();
-    	if(connection != null) {
-    		connection.commit();
-    		connection.close();
-    	}
-    }
-
-    @Override
-    public void rollback() throws SQLException {
-    	System.out.println("JdbcTransaction.rollback()");
-    	if(preparedStatement != null)
-    		preparedStatement.close();
-    	if(connection != null) {
-    		connection.rollback();
-    		connection.close();
-    	}   		
-    }
-    
-}
+///** Strategy implementation */
+//class JdbcTransaction2<T> implements Transaction {
+//
+//    private Connection connection;
+//    private PreparedStatement preparedStatement;
+//    // Command implementation
+//    private List<ParameterMapper> parameterMapper;
+//    private T bean;
+//    private String sqlStatement;
+//    private Transaction transaction;
+//    
+//    public JdbcTransaction2(List<ParameterMapper> parameterMapper, String sqlStatement, Transaction transaction) {
+//		this.parameterMapper = parameterMapper;
+//		this.sqlStatement = sqlStatement;
+//		this.transaction = transaction;
+//	}
+//    
+//    public void setBeans(List beans) {
+//    	this.bean = bean;
+//    }
+//    
+//    @Override
+//    public void start() throws SQLException {
+//    	System.out.println("creating connection");
+//        connection = ConnectionBuilder.getConnection();
+//        connection.setAutoCommit(false);
+//        System.out.println("connection created");
+//    }
+//
+//    @Override
+//    /** This method implements the Template design pattern */
+//    public void execute() throws SQLException {
+//    	System.out.println("execute database operations");
+//    	if(transaction != null)
+//    		transaction.execute();
+//    	
+//    	preparedStatement = connection.prepareStatement(sqlStatement);
+////    	parameterMapper.mapParameters(preparedStatement, bean);
+//    	preparedStatement.execute();
+//    }
+//    
+//    @Override
+//    public void commit() throws SQLException {
+//    	System.out.println("JdbcTransaction.commit()");
+//    	if(preparedStatement != null)
+//    		preparedStatement.close();
+//    	if(connection != null) {
+//    		connection.commit();
+//    		connection.close();
+//    	}
+//    }
+//
+//    @Override
+//    public void rollback() throws SQLException {
+//    	System.out.println("JdbcTransaction.rollback()");
+//    	if(preparedStatement != null)
+//    		preparedStatement.close();
+//    	if(connection != null) {
+//    		connection.rollback();
+//    		connection.close();
+//    	}   		
+//    }
+//    
+//}
 

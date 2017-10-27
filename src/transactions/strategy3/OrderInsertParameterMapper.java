@@ -13,7 +13,6 @@ public class OrderInsertParameterMapper implements ParameterMapper<Order> {
 		ps.setDate(2, bean.getOrderDate());
 		ps.setInt(3, bean.getCustomerId());
 		ps.setInt(4, bean.getProductId());
-		
 	}
 
 }
