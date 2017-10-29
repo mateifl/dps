@@ -44,7 +44,6 @@ abstract class AbstractDataLoader2 implements DataLoader2 {
 
         if(preparedStatement != null)
             preparedStatement.close();
-
     }
 
 }
