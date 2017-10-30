@@ -1,9 +1,10 @@
-package transactions.strategy3;
+package transactions.strategy3.mappers;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import dbaccess.beans.Order;
+import transactions.strategy3.ParameterMapper;
 
 public class OrderInsertParameterMapper implements ParameterMapper<Order> {
 

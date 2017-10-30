@@ -6,6 +6,8 @@ import java.sql.SQLException;
 
 import dbaccess.beans.Customer;
 import dbaccess.beans.Order;
+import transactions.strategy3.mappers.CustomerUpdateParameterMapper;
+import transactions.strategy3.mappers.OrderInsertParameterMapper;
 
 
 /** General contract for a database unit of work that has to be executed in a transaction */
@@ -78,29 +80,3 @@ class InsertOrder extends AbstractDatabaseWork implements DatabaseWork<Connectio
 	} 
 }
 
-class DefaultDatabaseWork<T> implements DatabaseWork<Connection> {
-
-	private DatabaseWork<Connection> worker;
-	private ParameterMapper<T> mapper;
-	private T bean;
-	private String sql;
-	
-	
-	
-	@Override
-	public void doInTransaction(Connection connection) {
-		try {
-			if(worker != null)
-				worker.doInTransaction(connection);
-			PreparedStatement ps = connection.prepareStatement(sql);
-			mapper.mapParameters(ps, bean);
-			ps.execute();
-			ps.close();
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-		}
-		
-	}
-	
-}
