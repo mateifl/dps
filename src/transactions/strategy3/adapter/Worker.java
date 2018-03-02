@@ -7,9 +7,7 @@ import org.hibernate.Session;
 import transactions.strategy3.DatabaseWork;
 
 public interface Worker {
-
 	void execute();
-	
 }
 
 

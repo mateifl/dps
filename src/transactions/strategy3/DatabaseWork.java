@@ -3,6 +3,7 @@ package transactions.strategy3;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import dbaccess.beans.Customer;
 import dbaccess.beans.Order;
@@ -25,6 +26,12 @@ abstract class AbstractDatabaseWork {
 		mapper.mapParameters(ps, bean);
 		ps.execute();
 		ps.close();
+	}
+	
+	protected void executeStatement(Connection connection, String sql) throws SQLException {
+		Statement statement = connection.createStatement();
+		statement.execute(sql);
+		statement.close();
 	}
 }
 
@@ -64,7 +71,7 @@ class InsertOrder extends AbstractDatabaseWork implements DatabaseWork<Connectio
 		this.order = order;
 		this.worker = worker;
 	}
-	
+	 
 	@Override
 	public void doInTransaction(Connection connection) {
         try {
