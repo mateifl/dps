@@ -7,12 +7,17 @@ import java.sql.SQLException;
 import dbaccess.ConnectionBuilder;
 import dbaccess.beans.Customer;
 
-public class CustomerInsert {
+public class CustomerInsert implements BasicTransaction {
 		
 	private static String sql = "insert into customer values(?, ?, ?)";
-	
+	private Customer customer;
+
+	public CustomerInsert(Customer customer) {
+		this.customer = customer;
+	}
+
 	// TODO make this method throw and exception when connection is null, or when a database exception happens
-	public void execute(Customer customer) {
+	public void doInTransaction() {
         Connection connection = ConnectionBuilder.getConnection();
         try {
 			connection.setAutoCommit(false);

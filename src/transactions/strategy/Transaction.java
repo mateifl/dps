@@ -6,6 +6,8 @@ import java.sql.SQLException;
 
 import dbaccess.ConnectionBuilder;
 
+/** Basic contract for a transaction */
+
 public interface Transaction {
 
     /** Create the transaction
@@ -24,6 +26,8 @@ public interface Transaction {
     void rollback() throws SQLException;
 
 }
+
+
 
 abstract class AbstractJdbcTransaction implements Transaction {
 
