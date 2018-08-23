@@ -46,6 +46,9 @@ class InsertCustomer extends AbstractDatabaseWork implements DatabaseWork<Connec
     }
 }
 
+
+/* Business role: this class is intended to be used when the customer has changed his data
+* and the update must be done with the same transaction as the order. */
 class InsertOrderWithCustomerUpdate extends AbstractDatabaseWork implements DatabaseWork<Connection> {
 
 	private ParameterMapper<Customer> customerMapper;
@@ -64,6 +67,7 @@ class InsertOrderWithCustomerUpdate extends AbstractDatabaseWork implements Data
 	@Override
 	public void doInTransaction(Connection connection) {
         try {
+            // TODO should the SQLs be part of the simple transaction classes ?
         	executePreparedStatement(connection, SQLStatements.CUSTOMER_UPDATE, customerMapper, customer);
         	executePreparedStatement(connection, SQLStatements.INSERT_ORDER, orderMapper, order);
         }

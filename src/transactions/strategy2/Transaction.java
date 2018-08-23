@@ -1,7 +1,5 @@
 package transactions.strategy2;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import dbaccess.ConnectionBuilder;
@@ -26,4 +24,3 @@ public interface Transaction<T> {
     void rollback() throws SQLException;
 
 }
-

@@ -23,4 +23,6 @@ insert into toppings values(1, 'ananas', 4);
 insert into toppings values(2, 'extra cheese', 4);
 insert into toppings values(3, 'more tomates', 4);
 insert into toppings values(4, 'onions', 4);
-create table orders(id int primary key, order_date date, customer_id int, product_id int, toppings varchar(128) );
+-- do i need the toppings column  ?
+create table orders(id int primary key, order_date date not null, customer_id int not null, product_id int not null);
+create table orders_toppings(order_id int, topping_id int);

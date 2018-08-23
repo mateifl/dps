@@ -32,6 +32,8 @@ public interface Transaction {
 abstract class AbstractJdbcTransaction implements Transaction {
 
     protected Connection connection;
+    // TODO do i need this field here? it makes the transaction dependent on PreparedStatemts
+    // I can move it in implementation classes and I can also use Statements, maybe.
     protected PreparedStatement preparedStatement;
     
     @Override
@@ -43,6 +45,7 @@ abstract class AbstractJdbcTransaction implements Transaction {
     @Override
     public void commit() throws SQLException {
         connection.commit();
+        preparedStatement.close();
         connection.close();
     }
 

@@ -6,6 +6,7 @@ import java.sql.SQLException;
 
 import dbaccess.ConnectionBuilder;
 import dbaccess.beans.Customer;
+import utils.TransactionException;
 
 public class CustomerInsert implements BasicTransaction {
 		
@@ -16,8 +17,7 @@ public class CustomerInsert implements BasicTransaction {
 		this.customer = customer;
 	}
 
-	// TODO make this method throw and exception when connection is null, or when a database exception happens
-	public void doInTransaction() {
+	public void doInTransaction() throws TransactionException  {
         Connection connection = ConnectionBuilder.getConnection();
         try {
 			connection.setAutoCommit(false);
@@ -32,12 +32,14 @@ public class CustomerInsert implements BasicTransaction {
 			connection.commit();
 		} catch (SQLException e) {
 			try {
-				if(connection != null)
+				if(connection != null) {
 					connection.rollback();
+					connection.close();
+				}
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
-			e.printStackTrace();
+            throw new TransactionException(e.getMessage(), e);
 		}
         
 	}
