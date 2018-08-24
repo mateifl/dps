@@ -8,7 +8,9 @@ import java.sql.SQLException;
 /**
  *
  */
-public abstract class AbstractJdbcTransaction implements Transaction<Connection> {
+// No need to make this class abstract anymore. The specific code
+// will be separated in the parameter classes
+public class AbstractJdbcTransaction implements Transaction<Connection> {
 
     protected Connection connection;
 

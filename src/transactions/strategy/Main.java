@@ -14,6 +14,9 @@ public class Main {
 			TransactionExecution transactionExecution = new TransactionExecution();
 			
 			Customer customer = new Customer();
+			customer.setName("Test insert");
+			customer.setAddress("Test insert address");
+			customer.setPhone("+102323323");
 			Transaction transaction = new CustomerInsert(customer);
 			transactionExecution.execute(transaction);
 			

@@ -3,6 +3,7 @@ package transactions.strategy2;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import dbaccess.beans.Customer;
 import dbaccess.beans.Order;
@@ -22,6 +23,14 @@ abstract class AbstractDatabaseWork {
 		ps.execute();
 		ps.close();
 	}
+
+	protected boolean executeStatement(Connection connection, String sql)
+            throws SQLException {
+        Statement st = connection.createStatement();
+        boolean result = st.execute(sql);
+        st.close();
+        return result;
+    }
 }
 
 class InsertCustomer extends AbstractDatabaseWork implements DatabaseWork<Connection> {
