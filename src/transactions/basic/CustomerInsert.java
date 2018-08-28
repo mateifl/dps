@@ -8,7 +8,7 @@ import dbaccess.ConnectionBuilder;
 import dbaccess.beans.Customer;
 import utils.TransactionException;
 
-public class CustomerInsert implements BasicTransaction {
+public class CustomerInsert implements Transaction {
 		
 	private static String sql = "insert into customer(name, address, phone) values(?, ?, ?)";
 	private Customer customer;
@@ -32,15 +32,14 @@ public class CustomerInsert implements BasicTransaction {
 			connection.commit();
 		} catch (SQLException e) {
 			try {
-				if(connection != null) {
+				if (connection != null) {
 					connection.rollback();
 					connection.close();
 				}
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
-            throw new TransactionException(e.getMessage(), e);
+			throw new TransactionException(e.getMessage(), e);
 		}
-        
 	}
 }
