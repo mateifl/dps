@@ -16,7 +16,7 @@ public class PreparedStatementWork<T> implements DatabaseWork<Connection> {
 		this.sql = sql;
 		this.worker = worker;
 	}
-	
+
 	public void doInTransaction(Connection connection) {
 		try {
 			if(worker != null)
