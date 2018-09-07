@@ -1,8 +1,6 @@
 package transactions.strategy2;
 
-import java.sql.SQLException;
-
-import dbaccess.ConnectionBuilder;
+import utils.DatabaseException;
 
 /** T represents the type that manages the transaction, for example
  * java.sql.Connection in JDBC, org.hibernate.Session in Hibernate, the entity manager in JPA.
@@ -12,15 +10,15 @@ import dbaccess.ConnectionBuilder;
 public interface Transaction<T> {
 
     /** Create the transaction */
-    void start() throws SQLException;
+    void start() throws DatabaseException;
     
     /** Executes the database work */
-    void execute(DatabaseWork<T> databaseWork) throws SQLException;
+    void execute(DatabaseWork<T> databaseWork) throws DatabaseException;
 
     /** Commit the transaction */
-    void commit() throws SQLException;
+    void commit() throws DatabaseException;
 
     /** Roll back the transaction */
-    void rollback() throws SQLException;
+    void rollback() throws DatabaseException;
 
 }

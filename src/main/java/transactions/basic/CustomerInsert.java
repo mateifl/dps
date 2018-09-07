@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 import dbaccess.ConnectionBuilder;
 import dbaccess.beans.Customer;
-import utils.TransactionException;
+import utils.DatabaseException;
 
 public class CustomerInsert implements Transaction {
 		
@@ -17,7 +17,7 @@ public class CustomerInsert implements Transaction {
 		this.customer = customer;
 	}
 
-	public void doTransaction() throws TransactionException  {
+	public void doTransaction() throws DatabaseException  {
         Connection connection = ConnectionBuilder.getConnection();
         try {
 			connection.setAutoCommit(false);
@@ -39,7 +39,7 @@ public class CustomerInsert implements Transaction {
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
-			throw new TransactionException(e.getMessage(), e);
+			throw new DatabaseException(e.getMessage(), e);
 		}
 	}
 }
