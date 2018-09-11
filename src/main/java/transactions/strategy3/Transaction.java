@@ -1,26 +1,21 @@
 package transactions.strategy3;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.util.List;
-
-import dbaccess.ConnectionBuilder;
+import utils.DatabaseException;
 
 
 public interface Transaction {
 
     /** Create the transaction */
-    void start() throws SQLException;
+    void start() throws DatabaseException;
     
     /** Executes the statements on the database */
-    void  execute(DatabaseWork worker) throws SQLException;
+    void  execute(DatabaseWork worker) throws DatabaseException;
 
     /** Commit the transaction */
-    void commit() throws SQLException;
+    void commit() throws DatabaseException;
 
     /** Roll back the transaction */
-    void rollback() throws SQLException;
+    void rollback() throws DatabaseException;
 
 }
 
@@ -46,7 +41,7 @@ public interface Transaction {
 //    }
 //    
 //    @Override
-//    public void start() throws SQLException {
+//    public void start() throws DatabaseException {
 //    	System.out.println("creating connection");
 //        connection = ConnectionBuilder.getConnection();
 //        connection.setAutoCommit(false);
@@ -55,7 +50,7 @@ public interface Transaction {
 //
 //    @Override
 //    /** This method implements the Template design pattern */
-//    public void execute() throws SQLException {
+//    public void execute() throws DatabaseException {
 //    	System.out.println("execute database operations");
 //    	if(transaction != null)
 //    		transaction.execute();
@@ -66,7 +61,7 @@ public interface Transaction {
 //    }
 //    
 //    @Override
-//    public void commit() throws SQLException {
+//    public void commit() throws DatabaseException {
 //    	System.out.println("JdbcTransaction.commit()");
 //    	if(preparedStatement != null)
 //    		preparedStatement.close();
@@ -77,7 +72,7 @@ public interface Transaction {
 //    }
 //
 //    @Override
-//    public void rollback() throws SQLException {
+//    public void rollback() throws DatabaseException {
 //    	System.out.println("JdbcTransaction.rollback()");
 //    	if(preparedStatement != null)
 //    		preparedStatement.close();

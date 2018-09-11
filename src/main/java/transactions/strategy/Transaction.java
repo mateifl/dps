@@ -6,25 +6,36 @@ import java.sql.SQLException;
 import dbaccess.ConnectionBuilder;
 import utils.DatabaseException;
 
-/** Basic contract for a transaction */
+/**
+ * Basic contract for a transaction. By separating the steps is easier to
+ * modify each one of them.
+ * Example: to add logging when on commit/rollback we can change in only one place,
+ * where the commit/rollback is implemented.
+ */
 
 public interface Transaction {
 
-    /** Create the transaction
+    /**
+     * Create the transaction
      */
     void start() throws DatabaseException;
 
-    /** Executes the statements on the database */
+    /**
+     * Executes the statements on the database
+     */
     void execute() throws DatabaseException;
 
-    /** Commit the transaction */
+    /**
+     * Commit the transaction
+     */
     void commit() throws DatabaseException;
 
-    /** Roll back the transaction */
+    /**
+     * Roll back the transaction
+     */
     void rollback() throws DatabaseException;
 
 }
-
 
 
 abstract class AbstractJdbcTransaction implements Transaction {
@@ -35,9 +46,10 @@ abstract class AbstractJdbcTransaction implements Transaction {
 
         try {
             connection = ConnectionBuilder.getConnection();
+            if (connection == null)
+                throw new DatabaseException("Null connection!");
             connection.setAutoCommit(false);
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             closeConnection();
             throw new DatabaseException("", e);
         }
@@ -45,12 +57,10 @@ abstract class AbstractJdbcTransaction implements Transaction {
 
     public void commit() throws DatabaseException {
         try {
-            if (connection != null) {
+            if (connection != null)
                 connection.commit();
-                connection.close();
-            }
-        }
-        catch(SQLException e) {
+
+        } catch (SQLException e) {
             closeConnection();
             throw new DatabaseException("", e);
         }
@@ -58,18 +68,17 @@ abstract class AbstractJdbcTransaction implements Transaction {
     }
 
     public void rollback() throws DatabaseException {
-        if(connection != null) {
-            try {
+
+        try {
+            if (connection != null)
                 connection.rollback();
-                connection.close();
-            }
-            catch (SQLException e) {
-                closeConnection();
-                throw new DatabaseException("", e);
-            }
+        } catch (SQLException e) {
+            closeConnection();
+            throw new DatabaseException("", e);
         }
+
     }
-    
+
     private void closeConnection() {
         try {
             if (connection != null && !connection.isClosed())

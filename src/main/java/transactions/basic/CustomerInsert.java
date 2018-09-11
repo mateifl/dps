@@ -10,7 +10,7 @@ import utils.DatabaseException;
 
 public class CustomerInsert implements Transaction {
 		
-	private static String sql = "insert into customer(name, address, phone) values(?, ?, ?)";
+	private static String sql = "insert into customers(name, address, phone, id) values(?, ?, ?, ?)";
 	private Customer customer;
 
 	public CustomerInsert(Customer customer) {
@@ -26,7 +26,7 @@ public class CustomerInsert implements Transaction {
 			preparedStatement.setString(1, customer.getName());
 			preparedStatement.setString(2, customer.getAddress());
 			preparedStatement.setString(3, customer.getPhone());
-			
+			preparedStatement.setInt(4, customer.getId());
 			preparedStatement.execute();
 			preparedStatement.close();
 			connection.commit();
@@ -34,12 +34,20 @@ public class CustomerInsert implements Transaction {
 			try {
 				if (connection != null) {
 					connection.rollback();
-					connection.close();
 				}
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
 			throw new DatabaseException(e.getMessage(), e);
+		} finally {
+        	try {
+				if (connection != null)
+					connection.close();
+			}
+			catch(SQLException e) {
+                System.out.println("ERROR closing connection");
+                System.out.println(e.getMessage());
+			}
 		}
 	}
 }

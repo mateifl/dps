@@ -1,5 +1,7 @@
 package dbaccess;
 
+import utils.DatabaseException;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -14,7 +16,7 @@ public class ConnectionBuilder {
 	private static String user = "";
 	private static String password = "";
 
-	public static Connection getConnection() {
+	public static Connection getConnection() throws DatabaseException {
 
 		try {
 			if (!init) {
@@ -26,7 +28,7 @@ public class ConnectionBuilder {
 		} catch (ClassNotFoundException e) {
 			System.out.println(e.getMessage());
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+			throw new DatabaseException("", e);
 		}
 
 		return null;

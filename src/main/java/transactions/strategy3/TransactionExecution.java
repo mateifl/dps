@@ -1,5 +1,7 @@
 package transactions.strategy3;
 
+import utils.DatabaseException;
+
 import java.sql.SQLException;
 
 
@@ -17,7 +19,7 @@ public class TransactionExecution {
             transaction.start();
             transaction.execute(worker);
             transaction.commit();
-        } catch (SQLException e) {
+        } catch (DatabaseException e) {
             transaction.rollback();
             throw new Exception(e);
         }
