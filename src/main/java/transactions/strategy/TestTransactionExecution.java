@@ -8,14 +8,14 @@ import utils.DatabaseException;
  */
 
 public class TestTransactionExecution {
+
     public void execute(Transaction transaction) throws DatabaseException {
         try {
             transaction.start();
             transaction.execute();
+        }
+        finally {
             transaction.rollback();
-        } catch (DatabaseException e) {
-            transaction.rollback();
-            throw e;
         }
     }
 }

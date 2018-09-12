@@ -21,13 +21,15 @@ public class JdbcTransaction implements Transaction<Connection> {
 
         try {
             connection = ConnectionBuilder.getConnection();
+            if (connection == null)
+                throw new DatabaseException("Null connection!");
             connection.setAutoCommit(false);
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             closeConnection();
             throw new DatabaseException("", e);
         }
     }
+
 
     /**
      * This method implements the Template Method design pattern.
@@ -38,16 +40,27 @@ public class JdbcTransaction implements Transaction<Connection> {
 
     public void commit() throws DatabaseException {
         try {
-            if (connection != null) {
+            if (connection != null)
                 connection.commit();
-                connection.close();
-            }
-        }
-        catch(SQLException e) {
-            closeConnection();
+        } catch (SQLException e) {
             throw new DatabaseException("", e);
         }
+        finally {
+            closeConnection();
+        }
+    }
 
+    public void rollback() throws DatabaseException {
+
+        try {
+            if (connection != null)
+                connection.rollback();
+        } catch (SQLException e) {
+            throw new DatabaseException("", e);
+        }
+        finally {
+            closeConnection();
+        }
     }
 
     private void closeConnection() {
@@ -59,16 +72,4 @@ public class JdbcTransaction implements Transaction<Connection> {
         }
     }
 
-    public void rollback() throws DatabaseException {
-        if(connection != null) {
-            try {
-                connection.rollback();
-                connection.close();
-            }
-            catch (SQLException e) {
-                closeConnection();
-                throw new DatabaseException("", e);
-            }
-        }
-    }
 }

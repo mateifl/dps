@@ -33,6 +33,10 @@ abstract class AbstractDatabaseWork {
     }
 }
 
+/**
+ * Business role: inserts a customer's data in the database.
+ */
+
 class InsertCustomer extends AbstractDatabaseWork implements DatabaseWork<Connection> {
 
 	private ParameterMapper<Customer> customerMapper;
@@ -55,8 +59,10 @@ class InsertCustomer extends AbstractDatabaseWork implements DatabaseWork<Connec
 }
 
 
-/* Business role: this class is intended to be used when the customer has changed his data
-* and the update must be done with the same transaction as the order. */
+/**
+ * Business role: this class is intended to be used when the customer has changed his data
+ * and the update must be done with the same transaction as the order.
+ */
 class InsertOrderWithCustomerUpdate extends AbstractDatabaseWork implements DatabaseWork<Connection> {
 
 	private ParameterMapper<Customer> customerMapper;

@@ -37,6 +37,11 @@ public interface Transaction {
 
 }
 
+/**
+ * AbstractJdbcTransaction implements the common steps (start, commit and rollback).
+ * The specific step, execute, will be implemented in the specific classes.
+ * This implements a design principle: separate the common code from the specific code.
+ */
 
 abstract class AbstractJdbcTransaction implements Transaction {
 
@@ -59,12 +64,12 @@ abstract class AbstractJdbcTransaction implements Transaction {
         try {
             if (connection != null)
                 connection.commit();
-
         } catch (SQLException e) {
-            closeConnection();
             throw new DatabaseException("", e);
         }
-
+        finally {
+            closeConnection();
+        }
     }
 
     public void rollback() throws DatabaseException {
@@ -73,10 +78,11 @@ abstract class AbstractJdbcTransaction implements Transaction {
             if (connection != null)
                 connection.rollback();
         } catch (SQLException e) {
-            closeConnection();
             throw new DatabaseException("", e);
         }
-
+        finally {
+            closeConnection();
+        }
     }
 
     private void closeConnection() {

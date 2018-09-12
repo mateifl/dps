@@ -17,13 +17,16 @@ public class CategoryInsert extends AbstractJdbcTransaction {
     }
     
     public void execute() throws DatabaseException {
-        // again common code, prepare and execute
-        try {
+    	try {
+        	// common code
 			preparedStatement = connection.prepareStatement(sql);
+			// end common code
 			preparedStatement.setInt(1, category.getId());
 			preparedStatement.setString(2, category.getName());
+			// common code
 			preparedStatement.execute();
 			preparedStatement.close();
+			// end common code
 		} catch (SQLException e) {
 			throw new DatabaseException("", e);
 		}

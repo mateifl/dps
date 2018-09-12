@@ -22,7 +22,6 @@ public class CustomerInsert implements Transaction {
         try {
 			connection.setAutoCommit(false);
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
-			
 			preparedStatement.setString(1, customer.getName());
 			preparedStatement.setString(2, customer.getAddress());
 			preparedStatement.setString(3, customer.getPhone());

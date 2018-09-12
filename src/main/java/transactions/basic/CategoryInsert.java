@@ -12,7 +12,6 @@ public class CategoryInsert implements Transaction {
         Connection connection = ConnectionBuilder.getConnection();
         try {
             connection.setAutoCommit(false);
-
             connection.commit();
         } catch (SQLException e) {
             try {

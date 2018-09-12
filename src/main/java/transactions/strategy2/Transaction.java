@@ -6,7 +6,7 @@ import utils.DatabaseException;
  * java.sql.Connection in JDBC, org.hibernate.Session in Hibernate, the entity manager in JPA.
  *
  *
- * */
+ */
 public interface Transaction<T> {
 
     /** Create the transaction */

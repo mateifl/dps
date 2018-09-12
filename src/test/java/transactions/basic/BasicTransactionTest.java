@@ -14,15 +14,13 @@ public class BasicTransactionTest {
 
     @Test
     public void testInsertCustomer() {
-
         Customer customer = new Customer();
         customer.setId(100);
         customer.setPhone("11380");
         customer.setCity("Test City");
         customer.setName("Test Name");
-        customer.setAddress("test first transaction");
+        customer.setAddress("Test first transaction");
         new CustomerInsert(customer).doTransaction();
-
     }
 
 }
