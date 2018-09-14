@@ -14,14 +14,14 @@ public class TransactionExecution {
 		this.transaction = transaction;
 	}
 	
-    public <T> void execute(DatabaseWork<T> worker) throws Exception {
+    public <T> void execute(DatabaseWork<T> worker) throws DatabaseException {
         try {
             transaction.start();
             transaction.execute(worker);
             transaction.commit();
         } catch (DatabaseException e) {
             transaction.rollback();
-            throw new Exception(e);
+            throw e;
         }
     }
 

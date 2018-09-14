@@ -7,10 +7,11 @@ import java.sql.Statement;
 
 import dbaccess.beans.Customer;
 import dbaccess.beans.Order;
+import utils.DatabaseException;
 
 /** General contract for a database unit of work that has to be executed in a transaction */
 public interface DatabaseWork<T> {
-    void doInTransaction(T object);
+    void doInTransaction(T object) throws DatabaseException;
 }
 
 
@@ -47,17 +48,15 @@ class InsertCustomer extends AbstractDatabaseWork implements DatabaseWork<Connec
 		this.customer = customer;
 	}
 	
-    public void doInTransaction(Connection connection) {
+    public void doInTransaction(Connection connection) throws DatabaseException {
         try {
         	executePreparedStatement(connection, SQLStatements.INSERT_CUSTOMER, customerMapper, customer);
         }
         catch(SQLException e) {
-            System.out.println(e.getMessage());
+            new DatabaseException("Error inserting customer!", e);
         }
-
     }
 }
-
 
 /**
  * Business role: this class is intended to be used when the customer has changed his data

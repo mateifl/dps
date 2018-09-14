@@ -54,8 +54,8 @@ class CustomerDataLoader2 extends AbstractDataLoader2 {
         super(c);
     }
 
-    public void mapParameters(List parameterValues) {
-
+    public void mapParameters(List parameterValues) throws SQLException {
+        preparedStatement.setInt(1, 1);
     }
 
     public List processResult() throws SQLException {

@@ -21,6 +21,7 @@ public class TestSimpleStrategy {
         customer.setName("Test insert");
         customer.setAddress("Test insert address");
         customer.setPhone("+102323323");
+        customer.setId(6655);
         Transaction transaction = new CustomerInsert(customer);
         transactionExecution.execute(transaction);
 

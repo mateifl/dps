@@ -1,6 +1,6 @@
 package transactions.strategy3;
 
 /**
- * This 3rd implementation allows for transaction chaining.
+ * The 3rd  implementation of the transactions using Strategy allows for transaction chaining.
  *
  */
