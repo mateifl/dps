@@ -13,29 +13,36 @@ import transactions.strategy3.mappers.OrderInsertParameterMapper;
 
 /** General contract for a database unit of work that has to be executed in a transaction */
 public interface DatabaseWork<T> {
-    void doInTransaction(T object);
+	
+	/**
+	 * 
+	 * @param transactionManager - an object used to start/commit/rollback a transaction
+	 * For example, the java.sql.Connextion for JDBC and javax.persistence.EntityManager for 
+	 * JPA.
+	 */
+    void doInTransaction(T transactionManager);
 }
 
-abstract class AbstractDatabaseWork {
+abstract class JdbcDatabaseWork {
 	
 	protected DatabaseWork<Connection> worker;
 	
-	protected <T> void executePreparedStatement(Connection connection, String sql, ParameterMapper<T> mapper, T bean) 
+	protected <T> void updateWithPreparedStatement(Connection connection, String sql, ParameterMapper<T> mapper, T bean) 
 			throws SQLException {
 		PreparedStatement ps = connection.prepareStatement(sql);
 		mapper.mapParameters(ps, bean);
-		ps.execute();
+		ps.executeUpdate();
 		ps.close();
 	}
 	
-	protected void executeStatement(Connection connection, String sql) throws SQLException {
+	protected void updateWithStatement(Connection connection, String sql) throws SQLException {
 		Statement statement = connection.createStatement();
-		statement.execute(sql);
+		statement.executeUpdate(sql);
 		statement.close();
 	}
 }
 
-class UpdateCustomer extends AbstractDatabaseWork implements DatabaseWork<Connection> {
+class UpdateCustomer extends JdbcDatabaseWork implements DatabaseWork<Connection> {
 
 	private ParameterMapper<Customer> customerMapper;
 	private Customer customer;
@@ -51,16 +58,15 @@ class UpdateCustomer extends AbstractDatabaseWork implements DatabaseWork<Connec
         	if(this.worker != null)
         		worker.doInTransaction(connection);
         	System.out.println("update customer");
-        	executePreparedStatement(connection, SQLStatements.CUSTOMER_UPDATE, customerMapper, customer);
+        	updateWithPreparedStatement(connection, SQLStatements.CUSTOMER_UPDATE, customerMapper, customer);
         }
         catch(SQLException e) {
             System.out.println(e.getMessage());
         }
-
     }
 }
 
-class InsertOrder extends AbstractDatabaseWork implements DatabaseWork<Connection> {
+class InsertOrder extends JdbcDatabaseWork implements DatabaseWork<Connection> {
 
 	private ParameterMapper<Order> orderMapper;
 	private Order order;
@@ -76,7 +82,7 @@ class InsertOrder extends AbstractDatabaseWork implements DatabaseWork<Connectio
         	if(worker != null)
         		worker.doInTransaction(connection);
         	System.out.println("inserting order");
-        	executePreparedStatement(connection, SQLStatements.INSERT_ORDER, orderMapper, order);
+        	updateWithPreparedStatement(connection, SQLStatements.INSERT_ORDER, orderMapper, order);
         }
         catch(SQLException e) {
             System.out.println(e.getMessage());

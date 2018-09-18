@@ -6,6 +6,7 @@ import org.junit.Test;
 import transactions.strategy3.mappers.CustomerUpdateParameterMapper;
 import transactions.strategy3.mappers.OrderInsertParameterMapper;
 
+import java.sql.Connection;
 import java.sql.Date;
 import java.util.Calendar;
 
@@ -23,12 +24,12 @@ public class TestStrategy3 {
         order.setProductId(1);
         order.setOrderDate(new Date(Calendar.getInstance().getTimeInMillis()));
 
-        DatabaseWork updateCustomerAddress = new PreparedStatementWork<Customer>(customer,
+        DatabaseWork<Connection> updateCustomerAddress = new PreparedStatementWork<Customer>(customer,
                 new CustomerUpdateParameterMapper(),
                 SQLStatements.CUSTOMER_UPDATE,
                 null);
 
-        DatabaseWork insertOrderAndUpdateCustomer = new PreparedStatementWork<Order>(order,
+        DatabaseWork<Connection> insertOrderAndUpdateCustomer = new PreparedStatementWork<Order>(order,
                 new OrderInsertParameterMapper(),
                 SQLStatements.INSERT_ORDER,
                 updateCustomerAddress);
