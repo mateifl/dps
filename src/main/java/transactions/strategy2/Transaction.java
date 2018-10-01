@@ -7,13 +7,13 @@ import utils.DatabaseException;
  *
  *
  */
-public interface Transaction<T> {
+public interface Transaction {
 
     /** Create the transaction */
     void start() throws DatabaseException;
     
     /** Executes the database work */
-    void execute(DatabaseWork<T> databaseWork) throws DatabaseException;
+    <T> void execute(DatabaseWork<T> databaseWork) throws DatabaseException;
 
     /** Commit the transaction */
     void commit() throws DatabaseException;

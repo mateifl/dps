@@ -23,7 +23,7 @@ public class JdbcTransaction implements Transaction {
         }
     }
 
-    /** This method implements the Template design pattern */
+    /** This method implements the Template Method design pattern */
     public void execute(DatabaseWork worker) throws DatabaseException {
     	worker.doInTransaction(connection);
     }

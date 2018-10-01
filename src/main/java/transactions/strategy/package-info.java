@@ -7,5 +7,5 @@ package transactions.strategy;
  * This interface has an abstract implementation:
  * {@link transactions.strategy.AbstractJdbcTransaction}
  * which implements the common steps and leaves the specific step  to be implemented
- * in specific classes (ex. {@link transactions.basic.CustomerInsert}
+ * in specific classes (ex. {@link transactions.basic.CustomerInsert})
  */

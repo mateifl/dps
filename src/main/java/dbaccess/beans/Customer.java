@@ -8,8 +8,6 @@ public class Customer {
     private String phone;
     private String city;
 
-
-
     public Integer getId() {
         return id;
     }
@@ -49,6 +47,4 @@ public class Customer {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-    
-    
 }

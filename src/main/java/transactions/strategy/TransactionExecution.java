@@ -10,13 +10,17 @@ import utils.DatabaseException;
 
 public class TransactionExecution {
 
-    // here we pass a Transaction implementation that will be executed in this method.
+    /**
+     *
+     * @param transaction - implementation of the transaction interface that will be executed in this context.
+     * @throws DatabaseException
+     */
     public void execute(Transaction transaction) throws DatabaseException {
         try {
             transaction.start();
             transaction.execute();
             transaction.commit();
-            System.out.println("committed");
+            System.out.println("transaction committed");
         } catch (DatabaseException e) {
             System.out.println("rollback");
             transaction.rollback();

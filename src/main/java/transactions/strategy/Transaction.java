@@ -9,8 +9,7 @@ import utils.DatabaseException;
 /**
  * Basic contract for a transaction. By separating the steps is easier to
  * modify each one of them.
- * Example: to add logging when on commit/rollback we can change in only one place,
- * where the commit/rollback is implemented.
+ * Example: to add logging when on commit/rollback takes place we can change in only one method.
  */
 
 public interface Transaction {

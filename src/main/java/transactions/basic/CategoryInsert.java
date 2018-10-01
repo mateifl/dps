@@ -9,21 +9,19 @@ import java.sql.SQLException;
 public class CategoryInsert implements Transaction {
 
     public void doTransaction() throws DatabaseException {
-        Connection connection = ConnectionBuilder.getConnection();
+        Connection connection = null;
         try {
+            ConnectionBuilder.getConnection();
             connection.setAutoCommit(false);
             connection.commit();
         } catch (SQLException e) {
             try {
-                if (connection != null) {
-                    connection.rollback();
-                    connection.close();
-                }
+                connection.rollback();
+                connection.close();
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }
             throw new DatabaseException(e.getMessage(), e);
         }
     }
-
 }

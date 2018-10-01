@@ -13,7 +13,7 @@ import java.sql.SQLException;
 // No need to make this class abstract anymore. The specific code
 // will be separated in the parameter classes. This is a step in the good
 // direction, as it removes the need for inheritance.
-public class JdbcTransaction implements Transaction<Connection> {
+public class JdbcTransaction implements Transaction {
 
     protected Connection connection;
 
@@ -34,7 +34,7 @@ public class JdbcTransaction implements Transaction<Connection> {
     /**
      * This method implements the Template Method design pattern.
      */
-    public void execute(DatabaseWork<Connection> databaseWork) throws DatabaseException {
+    public void execute(DatabaseWork databaseWork) throws DatabaseException {
         databaseWork.doInTransaction(connection);
     }
 

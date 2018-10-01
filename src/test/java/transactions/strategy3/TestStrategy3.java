@@ -14,6 +14,7 @@ public class TestStrategy3 {
 
     @Test
     public void test() {
+        System.out.println("Test strategy 3: chained transactions");
         Customer customer = new Customer();
         customer.setId(1);
         customer.setAddress("test strategy 3 transaction");

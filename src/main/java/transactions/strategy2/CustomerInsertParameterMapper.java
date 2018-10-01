@@ -7,9 +7,7 @@ import dbaccess.beans.Customer;
 
 public class CustomerInsertParameterMapper implements ParameterMapper<Customer>{
 
-	public void mapParameters(PreparedStatement ps, Customer bean) throws SQLException {
-		ps.setInt(1, bean.getId());
+	public void mapParameters(PreparedStatement preparedStatement, Customer bean) throws SQLException {
+		preparedStatement.setInt(1, bean.getId());
 	}
-
-
 }

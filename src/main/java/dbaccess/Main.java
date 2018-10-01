@@ -7,13 +7,13 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        try {
-            Connection c = ConnectionBuilder.getConnection();
+//        try {
+//            Connection c = ConnectionBuilder.getConnection();
 //            CustomerDataLoader customerDataLoader = new CustomerDataLoader(c);
 //            List l = customerDataLoader.execute("", new ArrayList());
-            c.close();
-        } catch (SQLException e) {
-        	System.out.println(e.getMessage());
-        }
+//            c.close();
+//        } catch (SQLException e) {
+//        	System.out.println(e.getMessage());
+//        }
     }
 }

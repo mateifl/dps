@@ -25,13 +25,9 @@ public class ConnectionBuilder {
 			}
 			Connection connection = DriverManager.getConnection(url, user, password);
 			return connection;
-		} catch (ClassNotFoundException e) {
-			System.out.println(e.getMessage());
-		} catch (SQLException e) {
+		} catch (ClassNotFoundException | SQLException e) {
 			throw new DatabaseException("", e);
 		}
-
-		return null;
 	}
 
 }

@@ -14,6 +14,7 @@ public class BasicTransactionTest {
 
     @Test
     public void testInsertCustomer() {
+        System.out.println("test basic transaction insert customer");
         Customer customer = new Customer();
         customer.setId(100);
         customer.setPhone("11380");
