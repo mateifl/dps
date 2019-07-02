@@ -2,8 +2,6 @@ package transactions.strategy3;
 
 import utils.DatabaseException;
 
-import java.sql.SQLException;
-
 
 /** Context for our Strategy Pattern */
 public class TransactionExecution {

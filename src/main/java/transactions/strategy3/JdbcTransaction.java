@@ -6,11 +6,12 @@ import java.sql.SQLException;
 import dbaccess.ConnectionBuilder;
 import utils.DatabaseException;
 
-/** Strategy implementation */
+/** Strategy implementation. */
 public class JdbcTransaction implements Transaction {
 
     private Connection connection;
 
+    /** Sets up the transaction */
     public void start() throws DatabaseException {
         try {
             System.out.println("creating connection");

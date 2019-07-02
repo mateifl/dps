@@ -5,7 +5,7 @@ import utils.DatabaseException;
 
 public interface Transaction {
 
-    /** Create the transaction */
+    /** Create/setup the transaction */
     void start() throws DatabaseException;
     
     /** Executes the statements on the database */

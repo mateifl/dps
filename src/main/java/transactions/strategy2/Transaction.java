@@ -12,7 +12,12 @@ public interface Transaction {
     /** Create the transaction */
     void start() throws DatabaseException;
     
-    /** Executes the database work */
+    /** 
+     * Executes the database work.
+     * T - parameter that represents the transaction provider. 
+     * For JDBC, this is a java.sql.Connection object. 
+     * TODO - should this be a interface/class parameter?
+     */
     <T> void execute(DatabaseWork<T> databaseWork) throws DatabaseException;
 
     /** Commit the transaction */

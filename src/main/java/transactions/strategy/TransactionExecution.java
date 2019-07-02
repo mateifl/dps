@@ -1,7 +1,5 @@
 package transactions.strategy;
 
-import java.sql.SQLException;
-
 import utils.DatabaseException;
 
 

@@ -8,6 +8,11 @@ import dbaccess.ConnectionBuilder;
 import dbaccess.beans.Customer;
 import utils.DatabaseException;
 
+/**
+ * Implementation of the Transaction interface. 
+ * On comparing with {@link transactions.basic.CategoryInsert}, we can see there is a lot of common code.
+ */
+
 public class CustomerInsert implements Transaction {
 		
 	private static String sql = "insert into customers(name, address, phone, id) values(?, ?, ?, ?)";

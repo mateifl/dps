@@ -13,23 +13,23 @@ public class CategoryInsert extends AbstractJdbcTransaction {
     private PreparedStatement preparedStatement;
 
     public CategoryInsert(Category c) {
-    	category = c;
+        category = c;
     }
-    
+
     public void execute() throws DatabaseException {
-    	try {
-        	// common code
-			preparedStatement = connection.prepareStatement(sql);
-			// end common code
-			preparedStatement.setInt(1, category.getId());
-			preparedStatement.setString(2, category.getName());
-			// common code
-			preparedStatement.execute();
-			preparedStatement.close();
-			// end common code
-		} catch (SQLException e) {
-			throw new DatabaseException("", e);
-		}
+        try {
+            // common code
+            preparedStatement = connection.prepareStatement(sql);
+            // end common code
+            preparedStatement.setInt(1, category.getId());
+            preparedStatement.setString(2, category.getName());
+            // common code
+            preparedStatement.execute();
+            preparedStatement.close();
+            // end common code
+        } catch (SQLException e) {
+            throw new DatabaseException("", e);
+        }
     }
 
 }
