@@ -1,9 +1,5 @@
 package transactions.strategy;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-
-import dbaccess.ConnectionBuilder;
 import utils.DatabaseException;
 
 /**

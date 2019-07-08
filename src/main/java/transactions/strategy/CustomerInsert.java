@@ -6,17 +6,23 @@ import java.sql.SQLException;
 import dbaccess.beans.Customer;
 import utils.DatabaseException;
 
+/**
+ * Implementation of the transaction 
+ * @author mflorescu
+ *
+ */
+
 public class CustomerInsert extends AbstractJdbcTransaction {
 
     private static String sql = "insert into customers(id, name, address, phone) values(?, ?, ?, ?)";
     private Customer customer;
-    private PreparedStatement preparedStatement;
 
     public CustomerInsert(Customer c) {
     	customer = c;
     }
     
     public void execute() throws DatabaseException {
+    	PreparedStatement preparedStatement = null;
         try {
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setInt(1, customer.getId());

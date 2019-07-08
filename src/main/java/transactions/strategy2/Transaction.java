@@ -7,7 +7,7 @@ import utils.DatabaseException;
  *
  *
  */
-public interface Transaction {
+public interface Transaction<T> {
 
     /** Create the transaction */
     void start() throws DatabaseException;
@@ -18,7 +18,7 @@ public interface Transaction {
      * For JDBC, this is a java.sql.Connection object. 
      * TODO - should this be a interface/class parameter?
      */
-    <T> void execute(DatabaseWork<T> databaseWork) throws DatabaseException;
+    void execute(DatabaseWork<T> databaseWork) throws DatabaseException;
 
     /** Commit the transaction */
     void commit() throws DatabaseException;
