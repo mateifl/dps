@@ -7,14 +7,16 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.Statement;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import dbaccess.ConnectionBuilder;
 
 public class DatabaseBuilder {
 
+    private static Logger logger = LoggerFactory.getLogger(DatabaseBuilder.class);
+
     public static void createDatabase() {
         try {
-//        	FileSystems.getDefault().getPath("", more)
             Connection connection = ConnectionBuilder.getConnection();
             Statement statement = connection.createStatement();	
             BufferedReader reader = new BufferedReader(new FileReader(FileSystems.getDefault().getPath("db.sql").toString()));
@@ -27,13 +29,12 @@ public class DatabaseBuilder {
         }
         catch (Exception e)
         {
-            System.out.println(e.getMessage());
+            logger.error("", e);
         }
     }
 
     public static void printDataFromTable(String table) {
         try {
-//        	FileSystems.getDefault().getPath("", more)
             Connection connection = ConnectionBuilder.getConnection();
             Statement statement = connection.createStatement();	
             ResultSet rs = statement.executeQuery("select * from " + table);
@@ -46,7 +47,7 @@ public class DatabaseBuilder {
         }
         catch (Exception e)
         {
-            System.out.println(e.getMessage());
+            logger.error("", e);
         }
     	
     }

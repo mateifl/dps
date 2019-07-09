@@ -4,8 +4,8 @@
   <groupId>learn</groupId>
   <artifactId>dps</artifactId>
   <packaging>jar</packaging>
-  <version>1.0-SNAPSHOT</version>
-  <name>dps-maven</name>
+  <version>0.1</version>
+  <name>Simple design patterns</name>
   <url>http://maven.apache.org</url>
   <dependencies>
     <dependency>
@@ -30,17 +30,17 @@
           <artifactId>log4j</artifactId>
           <version>1.2.17</version>
       </dependency>
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-api</artifactId>
-      <version>1.7.5</version>
-    </dependency>
-    <dependency>
-    	<groupId>org.slf4j</groupId>
-    	<artifactId>slf4j-log4j12</artifactId>
-    	<version>1.7.2</version>
-	</dependency>
-  </dependencies>
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+        <version>1.7.5</version>
+      </dependency>
+      <dependency>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-log4j12</artifactId>
+          <version>1.7.2</version>
+      </dependency>
+    </dependencies>
   <!-- build -->
   <build>
     <plugins>

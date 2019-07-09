@@ -15,8 +15,7 @@ public interface Transaction<T> {
     /** 
      * Executes the database work.
      * T - parameter that represents the transaction provider. 
-     * For JDBC, this is a java.sql.Connection object. 
-     * TODO - should this be a interface/class parameter?
+     * For JDBC, this is a java.sql.Connection object.
      */
     void execute(DatabaseWork<T> databaseWork) throws DatabaseException;
 

@@ -3,6 +3,8 @@ package transactions.strategy3;
 import dbaccess.beans.Customer;
 import dbaccess.beans.Order;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import transactions.strategy3.mappers.CustomerUpdateParameterMapper;
 import transactions.strategy3.mappers.OrderInsertParameterMapper;
 
@@ -12,9 +14,11 @@ import java.util.Calendar;
 
 public class TestStrategy3 {
 
+    private static Logger logger = LoggerFactory.getLogger(TestStrategy3.class);
+
     @Test
     public void test() {
-        System.out.println("Test strategy 3: chained transactions");
+        logger.info("Test strategy 3: chained transactions");
         Customer customer = new Customer();
         customer.setId(1);
         customer.setAddress("test strategy 3 transaction");

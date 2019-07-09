@@ -2,7 +2,6 @@ package transactions.strategy;
 
 import utils.DatabaseException;
 
-
 /** Context for our Strategy Pattern. It will execute a Transaction implementation and commit.
  * In case of error, the transaction will be rolled back. */
 
