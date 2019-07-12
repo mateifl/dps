@@ -3,9 +3,11 @@ package transactions.strategy;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import dbaccess.beans.Category;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import dbaccess.SQLStatements;
+import dbaccess.beans.Category;
 import utils.DatabaseException;
 
 /**
@@ -16,7 +18,7 @@ import utils.DatabaseException;
 public class CategoryInsert extends AbstractJdbcTransaction {
 
     private static Logger logger = LoggerFactory.getLogger(CategoryInsert.class);
-    private static String sql = "insert into categories values(?, ?)";
+
     private Category category;
 
     public CategoryInsert(Category c) {
@@ -28,7 +30,7 @@ public class CategoryInsert extends AbstractJdbcTransaction {
         PreparedStatement preparedStatement = null;
         try {
             // start common code
-            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement = connection.prepareStatement(SQLStatements.INSERT_CATEGORY);
             // end common code
             preparedStatement.setInt(1, category.getId());
             preparedStatement.setString(2, category.getName());

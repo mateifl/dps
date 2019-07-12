@@ -1,16 +1,18 @@
 package transactions.strategy3;
 
-import dbaccess.beans.Customer;
-import dbaccess.beans.Order;
-import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import transactions.strategy3.mappers.CustomerUpdateParameterMapper;
-import transactions.strategy3.mappers.OrderInsertParameterMapper;
-
 import java.sql.Connection;
 import java.sql.Date;
 import java.util.Calendar;
+
+import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import dbaccess.SQLStatements;
+import dbaccess.beans.Customer;
+import dbaccess.beans.Order;
+import transactions.strategy3.mappers.CustomerUpdateParameterMapper;
+import transactions.strategy3.mappers.OrderInsertParameterMapper;
 
 public class TestStrategy3 {
 

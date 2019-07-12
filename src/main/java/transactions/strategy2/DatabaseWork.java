@@ -5,11 +5,12 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import dbaccess.SQLStatements;
 import dbaccess.beans.Customer;
 import dbaccess.beans.Order;
 import utils.DatabaseException;
 
-/** General contract for a database unit of work that has to be executed in a transaction */
+/** General contract for a database unit of work that has to be executed in a transaction. */
 public interface DatabaseWork<T> {
     void doInTransaction(T object) throws DatabaseException;
 }
@@ -79,7 +80,6 @@ class InsertOrderWithCustomerUpdate extends AbstractDatabaseWork implements Data
 	
 	public void doInTransaction(Connection connection) {
         try {
-            // TODO should the SQLs be part of the simple transaction classes ?
         	executePreparedStatement(connection, SQLStatements.CUSTOMER_UPDATE, customerMapper, customer);
         	executePreparedStatement(connection, SQLStatements.INSERT_ORDER, orderMapper, order);
         }

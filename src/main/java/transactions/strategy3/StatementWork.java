@@ -13,11 +13,7 @@ public class StatementWork implements DatabaseWork<Connection> {
 	public StatementWork(String sql) {
 		this.sql = sql;
 	}
-	
-	protected void beforeStatementExecution() { 
-		
-	}
-	
+
 	public void doInTransaction(Connection c) {
 		Statement statement = null;
 		try {

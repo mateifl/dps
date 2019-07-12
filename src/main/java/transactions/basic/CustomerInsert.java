@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import dbaccess.ConnectionBuilder;
+import dbaccess.SQLStatements;
 import dbaccess.beans.Customer;
 import utils.DatabaseException;
 
@@ -16,7 +17,6 @@ import utils.DatabaseException;
 
 public class CustomerInsert implements Transaction {
 		
-	private static String sql = "insert into customers(name, address, phone, id) values(?, ?, ?, ?)";
 	private Customer customer;
 
 	public CustomerInsert(Customer customer) {
@@ -27,7 +27,7 @@ public class CustomerInsert implements Transaction {
         Connection connection = ConnectionBuilder.getConnection();
         try {
 			connection.setAutoCommit(false);
-			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			PreparedStatement preparedStatement = connection.prepareStatement(SQLStatements.INSERT_CUSTOMER);
 			preparedStatement.setString(1, customer.getName());
 			preparedStatement.setString(2, customer.getAddress());
 			preparedStatement.setString(3, customer.getPhone());

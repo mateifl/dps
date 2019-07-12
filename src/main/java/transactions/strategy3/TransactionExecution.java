@@ -3,7 +3,7 @@ package transactions.strategy3;
 import utils.DatabaseException;
 
 
-/** Context for our Strategy Pattern */
+/** Context for our Strategy Pattern. */
 public class TransactionExecution {
 
 	private Transaction transaction;
