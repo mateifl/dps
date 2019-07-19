@@ -32,8 +32,7 @@ public class CategoryInsert extends AbstractJdbcTransaction {
             // start common code
             preparedStatement = connection.prepareStatement(SQLStatements.INSERT_CATEGORY);
             // end common code
-            preparedStatement.setInt(1, category.getId());
-            preparedStatement.setString(2, category.getName());
+            preparedStatement.setString(1, category.getName());
             // start common code
             preparedStatement.execute();
             preparedStatement.close();

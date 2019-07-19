@@ -1,7 +1,10 @@
 package utils;
 
 public class DatabaseException extends RuntimeException {
-    public DatabaseException() {
+
+	private static final long serialVersionUID = -3414901923005262724L;
+
+	public DatabaseException() {
         super();
     }
 

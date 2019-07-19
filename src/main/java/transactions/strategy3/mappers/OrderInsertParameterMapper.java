@@ -9,10 +9,9 @@ import transactions.strategy3.ParameterMapper;
 public class OrderInsertParameterMapper implements ParameterMapper<Order> {
 
 	public void mapParameters(PreparedStatement ps, Order bean) throws SQLException {
-		ps.setInt(1, bean.getId());
-		ps.setDate(2, bean.getOrderDate());
-		ps.setInt(3, bean.getCustomerId());
-		ps.setInt(4, bean.getProductId());
+		ps.setDate(1, bean.getOrderDate());
+		ps.setInt(2, bean.getCustomerId());
+		ps.setInt(3, bean.getProductId());
 	}
 
 }

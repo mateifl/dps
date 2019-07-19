@@ -19,7 +19,6 @@ public class TestTransactionExecution {
             transaction.execute();
         }
         finally {
-            System.out.println("rollback");
             transaction.rollback();
         }
     }

@@ -1,8 +1,8 @@
-create table categories(id int primary key, name varchar(255));
-insert into categories values(1, 'Pizza');
-insert into categories values(2, 'Pasta');
-insert into categories values(3, 'Desert');
-create table customers(id int primary key, name varchar(255), address varchar(255), phone varchar(255), city varchar(255));
+create table categories(id int auto_increment primary key, name varchar(255));
+insert into categories(name) values('Pizza');
+insert into categories(name) values('Pasta');
+insert into categories(name) values('Desert');
+create table customers(id int auto_increment primary key, name varchar(255), address varchar(255), phone varchar(255), city varchar(255));
 insert into customers values(1, 'John D', 'Johns address', '099229922', 'New York');
 insert into customers values(2, 'Jane D', 'Janes address', '088118811', 'New York');
 insert into customers values(3, 'Tom S', 'Toms address', '088338833', 'Los Angeles');
@@ -10,7 +10,7 @@ insert into customers values(4, 'Tim S', 'Tims address', '088121212', 'Los Angel
 insert into customers values(5, 'Dave P', 'Daves address', '088445511' , 'New York');
 insert into customers values(6, 'Jean M', 'Jeans address', '012983333', 'New York');
 insert into customers values(7, 'Monique N', 'Moniques address', '033778822', 'Los Angeles');
-create table products(id int primary key, name varchar(255), price int, category_id int);
+create table products(id int auto_increment primary key, name varchar(255), price int, category_id int);
 insert into products values(1, 'Pizza carbonara', 10, 1);
 insert into products values(2, 'Pizza quatro stagioni', 11, 1);
 insert into products values(3, 'Pizza with no cheese', 12, 1);
@@ -18,11 +18,11 @@ insert into products values(4, 'Spaghetti carbonara', 9, 2);
 insert into products values(5, 'Penne carbonara', 10, 2);
 insert into products values(6, 'Muffin', 3, 3);
 insert into products values(7, 'Cake', 5, 3);	
-create table toppings(id int primary key, name varchar(255), price int);
+create table toppings(id int auto_increment primary key, name varchar(255), price int);
 insert into toppings values(1, 'ananas', 4);
 insert into toppings values(2, 'extra cheese', 4);
 insert into toppings values(3, 'more tomates', 4);
 insert into toppings values(4, 'onions', 4);
 -- do i need the toppings column  ?
-create table orders(id int primary key, order_date date not null, customer_id int not null, product_id int not null);
+create table orders(id int auto_increment primary key, order_date date not null, customer_id int not null, product_id int not null);
 create table orders_toppings(order_id int, topping_id int);

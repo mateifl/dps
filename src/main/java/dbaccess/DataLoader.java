@@ -50,7 +50,7 @@ import dbaccess.beans.Customer;
 class CustomersLoader //extends AbstractDataLoader
 {
 
-    public List execute(String sql, String filterValue) throws SQLException {
+    public List<Customer> execute(String sql, String filterValue) throws SQLException {
         // COMMON - create connection and prepared statement
         Connection connection = ConnectionBuilder.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -62,7 +62,7 @@ class CustomersLoader //extends AbstractDataLoader
         ResultSet r = preparedStatement.executeQuery();
         // -------------------------------------------------
         // create the list
-        List l = new ArrayList();
+        List<Customer> l = new ArrayList<Customer>();
         while(r.next()) {
             Customer c = new Customer();
             c.setId(r.getInt(0));

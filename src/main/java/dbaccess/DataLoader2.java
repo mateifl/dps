@@ -6,6 +6,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import dbaccess.beans.Customer;
+
+/**
+ * TODO what does this class do?
+ * @author mflorescu
+ *
+ */
 public interface DataLoader2 {
     //
     void setup(String sql) throws SQLException;
@@ -58,7 +65,7 @@ class CustomerDataLoader2 extends AbstractDataLoader2 {
         preparedStatement.setInt(1, 1);
     }
 
-    public List processResult() throws SQLException {
+    public List<Customer> processResult() throws SQLException {
         return null;
     }
 }

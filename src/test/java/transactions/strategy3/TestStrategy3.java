@@ -33,15 +33,14 @@ public class TestStrategy3 {
 
         DatabaseWork<Connection> updateCustomerAddress = new PreparedStatementWork<Customer>(customer,
                 new CustomerUpdateParameterMapper(),
-                SQLStatements.CUSTOMER_UPDATE,
-                null);
+                SQLStatements.CUSTOMER_UPDATE);
 
         DatabaseWork<Connection> insertOrderAndUpdateCustomer = new PreparedStatementWork<Order>(order,
                 new OrderInsertParameterMapper(),
                 SQLStatements.INSERT_ORDER,
                 updateCustomerAddress);
 
-        Transaction transaction = new JdbcTransaction();
+        Transaction<Connection> transaction = new JdbcTransaction();
         TransactionExecution transactionExecution = new TransactionExecution(transaction);
         transactionExecution.execute(insertOrderAndUpdateCustomer);
     }

@@ -17,6 +17,13 @@ public class PreparedStatementWork<T> implements DatabaseWork<Connection> {
 		this.worker = worker;
 	}
 
+	public PreparedStatementWork(T bean, ParameterMapper<T> mapper, String sql) {
+		this.bean = bean;
+		this.mapper = mapper;
+		this.sql = sql;
+		this.worker = null;
+	}
+	
 	public void doInTransaction(Connection connection) {
 		try {
 			if(worker != null)

@@ -6,10 +6,16 @@ import org.hibernate.Session;
 
 import transactions.strategy3.DatabaseWork;
 
+/**
+ * TODO
+ * What is the role of this interface and its implementations?
+ * @author mflorescu
+ *
+ */
+
 public interface Worker {
 	void execute();
 }
-
 
 class JdbcWorker implements Worker {
 	

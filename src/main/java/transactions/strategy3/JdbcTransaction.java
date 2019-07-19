@@ -7,7 +7,7 @@ import dbaccess.ConnectionBuilder;
 import utils.DatabaseException;
 
 /** Strategy implementation. */
-public class JdbcTransaction implements Transaction {
+public class JdbcTransaction implements Transaction<Connection> {
 
     private Connection connection;
 
@@ -25,7 +25,7 @@ public class JdbcTransaction implements Transaction {
     }
 
     /** This method implements the Template Method design pattern */
-    public void execute(DatabaseWork worker) throws DatabaseException {
+    public void execute(DatabaseWork<Connection> worker) throws DatabaseException {
     	worker.doInTransaction(connection);
     }
     
