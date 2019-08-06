@@ -19,7 +19,7 @@ public class TestStrategy3 {
     private static Logger logger = LoggerFactory.getLogger(TestStrategy3.class);
 
     @Test
-    public void test() {
+    public void testChainedTransactions() {
         logger.info("Test strategy 3: chained transactions");
         Customer customer = new Customer();
         customer.setId(1);

@@ -18,11 +18,11 @@ public interface DataLoader2 {
     void setup(String sql) throws SQLException;
 
     //
-    void mapParameters(List parameters) throws SQLException;
+    void mapParameters(List<?> parameters) throws SQLException;
 
     void execute() throws SQLException;
 
-    List processResult() throws SQLException;
+    List<?> processResult() throws SQLException;
 
     void cleanUp() throws SQLException;
 }

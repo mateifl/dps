@@ -8,11 +8,11 @@ public class TransactionExecution {
 
 	private Transaction transaction;
 	
-	public TransactionExecution(Transaction transaction) {
+	public TransactionExecution(Transaction<?> transaction) {
 		this.transaction = transaction;
 	}
 	
-    public <T> void execute(DatabaseWork<T> worker) throws DatabaseException {
+    public void execute(DatabaseWork<?> worker) throws DatabaseException {
         try {
             transaction.start();
             transaction.execute(worker);

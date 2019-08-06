@@ -18,7 +18,7 @@ public class TestSimpleStrategy {
     }
 
     @Test
-    public void test() {
+    public void testSimpleInserts() {
         logger.info("Test simple strategy: insert customer and category");
         TransactionExecution transactionExecution = new TransactionExecution();
 
