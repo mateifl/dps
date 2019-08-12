@@ -23,6 +23,7 @@ public class TestStrategy3 {
         logger.info("Test strategy 3: chained transactions");
         Customer customer = new Customer();
         customer.setId(1);
+        customer.setName("My name is Test Customer 3");
         customer.setAddress("test strategy 3 transaction");
 
         Order order = new Order();
@@ -40,8 +41,7 @@ public class TestStrategy3 {
                 SQLStatements.INSERT_ORDER,
                 updateCustomerAddress);
 
-        Transaction<Connection> transaction = new JdbcTransaction();
-        TransactionExecution transactionExecution = new TransactionExecution(transaction);
+        TransactionExecution transactionExecution = new TransactionExecution(new JdbcTransaction());
         transactionExecution.execute(insertOrderAndUpdateCustomer);
     }
 

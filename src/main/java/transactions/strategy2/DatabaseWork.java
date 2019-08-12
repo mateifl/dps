@@ -26,6 +26,7 @@ abstract class AbstractDatabaseWork {
 		ps.close();
 	}
 
+	// TODO do I need this method? Probably not in the first. 
 	protected boolean executeStatement(Connection connection, String sql)
             throws SQLException {
         Statement st = connection.createStatement();
@@ -41,11 +42,10 @@ abstract class AbstractDatabaseWork {
 
 class InsertCustomer extends AbstractDatabaseWork implements DatabaseWork<Connection> {
 
-	private ParameterMapper<Customer> customerMapper;
+	private ParameterMapper<Customer> customerMapper = new CustomerInsertParameterMapper();
 	private Customer customer;
 	
-	public InsertCustomer(ParameterMapper<Customer> customerMapper, Customer customer) {
-		this.customerMapper = customerMapper;
+	public InsertCustomer(Customer customer) {
 		this.customer = customer;
 	}
 	
@@ -65,16 +65,13 @@ class InsertCustomer extends AbstractDatabaseWork implements DatabaseWork<Connec
  */
 class InsertOrderWithCustomerUpdate extends AbstractDatabaseWork implements DatabaseWork<Connection> {
 
-	private ParameterMapper<Customer> customerMapper;
+	private ParameterMapper<Customer> customerMapper = new CustomerInsertParameterMapper();
 	private Customer customer;
 	private ParameterMapper<Order> orderMapper;
 	private Order order;
 	
-	public InsertOrderWithCustomerUpdate(ParameterMapper<Customer> customerMapper, Customer customer,
-										 ParameterMapper<Order> orderMapper, Order order) {
-		this.customerMapper = customerMapper;
+	public InsertOrderWithCustomerUpdate(Customer customer, Order order) {
 		this.customer = customer;
-		this.orderMapper = orderMapper;
 		this.order = order;
 	}
 	

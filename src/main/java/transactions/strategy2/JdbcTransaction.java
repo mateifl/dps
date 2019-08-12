@@ -1,10 +1,14 @@
 package transactions.strategy2;
 
 import dbaccess.ConnectionBuilder;
+import transactions.strategy.CategoryInsert;
 import utils.DatabaseException;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Implementation of the transaction interface for JDBC.
@@ -14,7 +18,7 @@ import java.sql.SQLException;
 // will be separated in the parameter classes. This is a step in the good
 // direction, as it removes the need for inheritance.
 public class JdbcTransaction implements Transaction<Connection> {
-
+	private static Logger logger = LoggerFactory.getLogger(JdbcTransaction.class);
     protected Connection connection;
 
     public void start() throws DatabaseException {
@@ -26,6 +30,7 @@ public class JdbcTransaction implements Transaction<Connection> {
             connection.setAutoCommit(false);
         } catch (SQLException e) {
             closeConnection();
+            logger.error("", e);
             throw new DatabaseException("", e);
         }
     }
@@ -40,9 +45,10 @@ public class JdbcTransaction implements Transaction<Connection> {
 
     public void commit() throws DatabaseException {
         try {
-            if (connection != null)
+            if (connection != null && !connection.isClosed())
                 connection.commit();
         } catch (SQLException e) {
+        	logger.error("", e);
             throw new DatabaseException("", e);
         }
         finally {
@@ -53,9 +59,10 @@ public class JdbcTransaction implements Transaction<Connection> {
     public void rollback() throws DatabaseException {
 
         try {
-            if (connection != null)
+            if (connection != null && !connection.isClosed())
                 connection.rollback();
         } catch (SQLException e) {
+        	logger.error("", e);
             throw new DatabaseException("", e);
         }
         finally {
@@ -68,7 +75,7 @@ public class JdbcTransaction implements Transaction<Connection> {
             if (connection != null && !connection.isClosed())
                 connection.close();
         } catch (SQLException e) {
-            System.out.println("error closing connection: " + e.getMessage());
+            logger.error("", e);
         }
     }
 

@@ -3,23 +3,28 @@ package transactions.strategy3;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import dbaccess.ConnectionBuilder;
 import utils.DatabaseException;
 
 /** Strategy implementation. */
 public class JdbcTransaction implements Transaction<Connection> {
 
+    private static Logger logger = LoggerFactory.getLogger(JdbcTransaction.class);
     private Connection connection;
 
     /** Sets up the transaction */
     public void start() throws DatabaseException {
         try {
-            System.out.println("creating connection");
+            logger.trace("creating connection");
             connection = ConnectionBuilder.getConnection();
             connection.setAutoCommit(false);
-            System.out.println("connection created");
+            logger.trace("connection created");
         }
         catch (SQLException e) {
+        	logger.error("", e);
             throw new DatabaseException("", e);
         }
     }
@@ -29,28 +34,32 @@ public class JdbcTransaction implements Transaction<Connection> {
     	worker.doInTransaction(connection);
     }
     
+    /** Commits the transaction */
     public void commit() throws DatabaseException {
         try {
-            System.out.println("JdbcTransaction.commit()");
+        	logger.trace("commit transaction");
             if(connection != null) {
                 connection.commit();
                 connection.close();
             }
         }
         catch (SQLException e) {
+        	logger.error("", e);
             throw new DatabaseException("", e);
         }
     }
 
+    /** Rolls back the transaction */
     public void rollback() throws DatabaseException {
         try {
-            System.out.println("JdbcTransaction.rollback()");
+        	logger.trace("rollback transaction");
             if(connection != null) {
                 connection.rollback();
                 connection.close();
             }
         }
         catch (SQLException e) {
+        	logger.error("", e);
             throw new DatabaseException("", e);
         }
     }

@@ -18,7 +18,6 @@ import utils.DatabaseException;
 public class CategoryInsert extends AbstractJdbcTransaction {
 
     private static Logger logger = LoggerFactory.getLogger(CategoryInsert.class);
-
     private Category category;
 
     public CategoryInsert(Category c) {

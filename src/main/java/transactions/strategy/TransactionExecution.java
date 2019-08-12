@@ -20,12 +20,14 @@ public class TransactionExecution {
      */
     public void execute(Transaction transaction) throws DatabaseException {
         try {
+        	logger.info("start transaction");
             transaction.start();
             transaction.execute();
             transaction.commit();
             logger.info("transaction committed");
         } catch (DatabaseException e) {
             transaction.rollback();
+            logger.info("transaction rolled back");
             logger.error("", e);
             throw e;
         }
