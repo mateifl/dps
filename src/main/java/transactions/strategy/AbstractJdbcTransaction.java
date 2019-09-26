@@ -9,13 +9,14 @@ import java.sql.SQLException;
 /**
  * AbstractJdbcTransaction implements the common steps (start, commit and rollback).
  * The specific step, execute, will be implemented in the specific classes.
- * This implements a design principle: separate the common code from the specific code.
+ * This implements a design principle: <b>separate the common code from the specific code</b>.
  */
 
 public abstract class AbstractJdbcTransaction implements Transaction {
 
     protected Connection connection;
 
+    /** Creates the connection and sets up the transaction by setting autocommit to false.*/
     public void start() throws DatabaseException {
 
         try {
@@ -29,6 +30,7 @@ public abstract class AbstractJdbcTransaction implements Transaction {
         }
     }
 
+    /** Commits the transaction and closes the connection.*/
     public void commit() throws DatabaseException {
         try {
             if (connection != null)
@@ -41,6 +43,7 @@ public abstract class AbstractJdbcTransaction implements Transaction {
         }
     }
 
+    /** Rolls back the transaction and closes the connection.*/
     public void rollback() throws DatabaseException {
 
         try {

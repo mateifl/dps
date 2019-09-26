@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 import utils.DatabaseException;
 
 /** 
- * Context for our Strategy Pattern. It will execute a Transaction implementation and commit.
+ * <p>Context for our Strategy Pattern.</p> It will execute a Transaction implementation and commit.
  * In case of error, the transaction will be rolled back. 
  */
 
@@ -14,7 +14,8 @@ public class TransactionExecution {
 
     private static Logger logger = LoggerFactory.getLogger(TransactionExecution.class);
     /**
-     * Execution method
+     * <p>Execution method.</p>
+     * It takes a {@link transactions.basic.Transaction} implementation and executes each step.
      * @param transaction - implementation of the transaction interface that will be executed in this context.
      * @throws DatabaseException
      */
@@ -23,6 +24,7 @@ public class TransactionExecution {
         	logger.info("start transaction");
             transaction.start();
             transaction.execute();
+
             transaction.commit();
             logger.info("transaction committed");
         } catch (DatabaseException e) {
